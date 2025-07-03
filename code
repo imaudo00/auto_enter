@@ -1,0 +1,43 @@
+import pyautogui
+import time
+import sys
+
+def auto_press_enter(num_times, interval_seconds):
+    """
+    指定回数、指定間隔でエンターキーを押します。
+    :param num_times: エンターキーを押す回数
+    :param interval_seconds: エンターキーを押す間隔（秒）
+    """
+    print(f"{num_times}回エンターキーを{interval_seconds}秒間隔で自動的に押します。")
+    print("自動で切り替わりますそのまま待機してください...")
+    time.sleep(2)  # 2秒の準備時間
+
+    #Alt+Tabでページを切り替える
+    print("Alt+Tabでページを切り替える")
+    pyautogui.hotkey('Alt','Tab')
+    time.sleep(2)
+
+    for i in range(num_times):
+        print(f"[{i + 1}/{num_times}] エンターキーを押します...")
+        pyautogui.press('enter')
+        if i < num_times - 1: # 最後のエンターの後には待機しない
+            time.sleep(interval_seconds)
+    
+    print("すべての操作が完了しました。")
+
+if __name__ == "__main__":
+    try:
+        # ユーザーからの入力を受け取る
+        times = int(input("エンターキーを押す回数を入力してください: "))
+        # 間隔は3秒固定
+        interval = 2 
+        
+        auto_press_enter(times, interval)
+    except ValueError:
+        print("無効な入力です。回数は整数で入力してください。")
+    except KeyboardInterrupt:
+        print("\nユーザーによって中断されました。")
+    except Exception as e:
+        print(f"エラーが発生しました: {e}")
+    finally:
+        print("プログラムを終了します。")
